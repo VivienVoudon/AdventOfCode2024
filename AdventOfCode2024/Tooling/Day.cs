@@ -5,7 +5,7 @@ public abstract class Day
 
     private string GetInput(Env step)
     {
-        using var fileStream = File.OpenRead($"input/day{DayCount}_{step}.txt");
+        using var fileStream = File.OpenRead($"C:\\Dev\\AdventOfCode2024\\AdventOfCode2024\\input\\day{DayCount}_{step}.txt");
         using var reader = new StreamReader(fileStream);
         return reader.ReadToEnd();
     }
