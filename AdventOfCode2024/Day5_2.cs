@@ -45,10 +45,46 @@ internal class Day5_2 : Day
             i++;
         }
 
-        result = wrongPages.Select(l =>
+        var orderedWrongPages = new List<List<string>>();
+        foreach (var wrongPage in wrongPages)
         {
-            var ordered = l.Split(',').OrderBy(o => o).ToList();
-            return ordered.Count / 2;
+            i = 0;
+            var pages = wrongPage.Split(',').ToList();
+            bool notOrderedYet = true;
+            while (i < pages.Count)
+            {
+                var pagesThatShouldBeBefore = rules.Where(r => r[1] == pages[i]).Select(r => r[0]).ToList();
+
+                var tmpPages = new List<string>(pages);
+                var updateDone = false;
+                for (var j = i + 1; j < pages.Count; j++)
+                {
+                    if (pagesThatShouldBeBefore.Contains(pages[j]))
+                    {
+                        tmpPages.Insert(i, pages[j]);
+                        tmpPages.RemoveAt(j + 1);
+                        i++;
+                        updateDone = true;
+                    }
+                }
+
+                if (updateDone)
+                {
+                    pages = tmpPages;
+                    i = 0;
+                }
+                else
+                    i++;
+            }
+
+            orderedWrongPages.Add(pages);
+        }
+
+        result = orderedWrongPages.Select(l =>
+        {
+            var middlePage = int.Parse(l[l.Count / 2]);
+            Console.WriteLine($"Middle page:{middlePage} ({inputLines[i]})");
+            return middlePage;
         }).Sum();
 
         Console.WriteLine(result);
