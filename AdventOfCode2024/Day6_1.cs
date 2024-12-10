@@ -38,29 +38,35 @@ internal class Day6_1 : Day
                     do
                     {
                         FillPath(gardienPos);
-                        gardienPos.Y--;
+                        if (Inbound(new Point(gardienPos.X, gardienPos.Y - 1)))
+                            gardienPos.Y--;
+                        else
+                            break;
                     } while (Inbound(gardienPos) && inputLines[gardienPos.Y][gardienPos.X] != '#');
                     gardienDirection = Direction.Right;
-                    gardienPos.Y++;
                     break;
 
                 case Direction.Bottom:
                     do
                     {
                         FillPath(gardienPos);
-                        gardienPos.Y++;
-                    } while (inputLines[gardienPos.Y][gardienPos.X] != '#');
+                        if (Inbound(new Point(gardienPos.X, gardienPos.Y + 1)))
+                            gardienPos.Y++;
+                        else
+                            break;
+                    } while (Inbound(gardienPos) && inputLines[gardienPos.Y][gardienPos.X] != '#');
                     gardienDirection = Direction.Left;
-                    gardienPos.Y--;
                     break;
 
                 case Direction.Left:
                     do
                     {
                         FillPath(gardienPos);
-                        gardienPos.X--;
-                    } while (inputLines[gardienPos.Y][gardienPos.X] != '#');
-                    gardienPos.X++;
+                        if (Inbound(new Point(gardienPos.X - 1, gardienPos.Y)))
+                            gardienPos.X--;
+                        else
+                            break;
+                    } while (Inbound(gardienPos) && inputLines[gardienPos.Y][gardienPos.X] != '#');
                     gardienDirection = Direction.Top;
                     break;
 
@@ -68,10 +74,12 @@ internal class Day6_1 : Day
                     do
                     {
                         FillPath(gardienPos);
-                        gardienPos.X++;
-                    } while (inputLines[gardienPos.Y][gardienPos.X] != '#');
+                        if (Inbound(new Point(gardienPos.X + 1, gardienPos.Y)))
+                            gardienPos.X++;
+                        else
+                            break;
+                    } while (Inbound(gardienPos) && inputLines[gardienPos.Y][gardienPos.X] != '#');
                     gardienDirection = Direction.Bottom;
-                    gardienPos.X--;
                     break;
             }
 
